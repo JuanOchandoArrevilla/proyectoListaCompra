@@ -1,0 +1,166 @@
+[
+    {
+        "id":1,
+        "nombreProducto": "fregasuelo",
+        "imagen": "fregasuelo.png",
+        "categoriaId": 1
+
+    },
+    {
+        "id":2,
+        "nombreProducto": "fairy",
+        "imagen": "fairy.png",
+        "categoriaId": 1
+    },
+    {
+        "id":3,
+        "nombreProducto": "bolsa de basura",
+        "imagen": "bolsa_basura.png",
+        "categoriaId": 1
+    },
+    {
+        "id":4,
+        "nombreProducto": "detergente",
+        "imagen": "detergente.png",
+        "categoriaId": 1
+    },
+    {
+        "id":5,
+        "nombreProducto": "papel",
+        "imagen": "multiusosResistente.png",
+        "categoriaId": 1
+    },
+    {
+        "id":6,
+        "nombreProducto": "papel higiénico",
+        "imagen": "higienico.png",
+        "categoriaId": 1
+    },
+    {
+        "id":7,
+        "nombreProducto": "cololias",
+        "imagen": "cololias.png",
+        "categoriaId": 2
+    },
+    {
+        "id":8,
+        "nombreProducto": "desodorante",
+        "imagen": "desodorante.png",
+        "categoriaId": 2
+    },
+    {
+        "id":9,
+        "nombreProducto": "gel de baño",
+        "imagen": "gel_baño.png",
+        "categoriaId": 2
+    },
+    {
+        "id":10,
+        "nombreProducto": "pasta de diente",
+        "imagen": "pasta_diente.png",
+        "categoriaId": 2
+    },
+    {
+        "id":11,
+        "nombreProducto": "mascarilla",
+        "imagen": "mascarilla.png",
+        "categoriaId": 2
+    },
+    {
+        "id":12,
+        "nombreProducto": "gel hidracolico",
+        "imagen": "gel_hidracolico.png",
+        "categoriaId": 2
+    },
+    {
+        "id":13,
+        "nombreProducto": "mascarilla",
+        "imagen": "mascarilla.png",
+        "categoriaId": 2
+    },
+    {
+        "id":14,
+        "nombreProducto": "platanos",
+        "imagen": "platano.png",
+        "categoriaId": 3
+    },
+    {
+        "id":15,
+        "nombreProducto": "manzana",
+        "imagen": "manzana.png",
+        "categoriaId": 3
+    },
+    {
+        "id":16,
+        "nombreProducto": "pera",
+        "imagen": "pera.png",
+        "categoriaId": 3
+    },
+    {
+        "id":17,
+        "nombreProducto": "naranja",
+        "imagen": "naranja.png",
+        "categoriaId": 3
+    },
+    {
+        "id":18,
+        "nombreProducto": "lechuga",
+        "imagen": "lechuga.png",
+        "categoriaId": 3
+    },
+    {
+        "id":19,
+        "nombreProducto": "zanahoria",
+        "imagen": "zanahoria.png",
+        "categoriaId": 3
+    },
+    {
+        "id":20,
+        "nombreProducto": "pimiento",
+        "imagen": "pimiento.png",
+        "categoriaId": 3
+    },
+    {
+        "id":21,
+        "nombreProducto": "aguacate",
+        "imagen": "aguacate.png",
+        "categoriaId": 3
+    },
+    {
+        "id":22,
+        "nombreProducto": "papas",
+        "imagen": "papas.png",
+        "categoriaId": 3
+    },
+    {
+        "id":23,
+        "nombreProducto": "tomate",
+        "imagen": "tomate.png",
+        "categoriaId": 3
+    },
+   
+    {
+        "id":24,
+        "nombreProducto": "pepino",
+        "imagen": "pepino.png",
+        "categoriaId": 3
+    },
+    {
+        "id":25,
+        "nombreProducto": "cebolla",
+        "imagen": "cebolla.png",
+        "categoriaId": 3
+    },
+    {
+        "id":26,
+        "nombreProducto": "ajo",
+        "imagen": "ajo.png",
+        "categoriaId": 3
+    },
+    {
+        "id":27,
+        "nombreProducto": "piña",
+        "imagen": "piña.png",
+        "categoriaId": 3
+    }
+]
