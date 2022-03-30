@@ -42,5 +42,4 @@ db.usuarios.associate(db);
 db.listaProductos.associate(db);
 db.categorias.associate(db);
 db.productos.associate(db);
-
 module.exports = db;
