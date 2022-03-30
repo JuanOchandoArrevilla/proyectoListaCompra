@@ -162,5 +162,174 @@
         "nombreProducto": "piña",
         "imagen": "piña.png",
         "categoriaId": 3
+    },
+    {
+        "id":28,
+        "nombreProducto": "jamón serrano",
+        "imagen": "jamon_serrano.png",
+        "categoriaId": 4
+    },
+    {
+        "id":29,
+        "nombreProducto": "jamón",
+        "imagen": "jamón.png",
+        "categoriaId": 4
+    },
+    {
+        "id":30,
+        "nombreProducto": "lonchas de pavo",
+        "imagen": "pechuga_pavo.png",
+        "categoriaId": 4
+    },
+    {
+        "id":31,
+        "nombreProducto": "lomo",
+        "imagen": "lomo.png",
+        "categoriaId": 4
+    },
+    {
+        "id":32,
+        "nombreProducto": "pechuga pollo",
+        "imagen": "pechuga_pollo.png",
+        "categoriaId": 4
+    },
+    {
+        "id":33,
+        "nombreProducto": "carne de hamburguesa",
+        "imagen": "carne_hamburguesa.png",
+        "categoriaId": 4
+    },
+    {
+        "id":34,
+        "nombreProducto": "chicharro",
+        "imagen": "chicharro.png",
+        "categoriaId": 4
+    },
+    {
+        "id":35,
+        "nombreProducto": "atun",
+        "imagen": "atun.png",
+        "categoriaId": 4
+    },
+    {
+        "id":36,
+        "nombreProducto": "sardina",
+        "imagen": "sardina.png",
+        "categoriaId": 4
+    },
+    {
+        "id":37,
+        "nombreProducto": "caballa",
+        "imagen": "caballa.png",
+        "categoriaId": 4
+    },
+    {
+        "id":38,
+        "nombreProducto": "queso",
+        "imagen": "queso.png",
+        "categoriaId": 5
+    },
+    {
+        "id":39,
+        "nombreProducto": "yogures",
+        "imagen": "yogures.png",
+        "categoriaId": 5
+    },
+    {
+        "id":40,
+        "nombreProducto": "leche",
+        "imagen": "leche.png",
+        "categoriaId": 5
+    },
+    {
+        "id":41,
+        "nombreProducto": "mantequilla",
+        "imagen": "mantequilla.png",
+        "categoriaId": 5
+    },
+    {
+        "id":42,
+        "nombreProducto": "flanes",
+        "imagen": "flan.png",
+        "categoriaId": 5
+    },
+    {
+        "id":43,
+        "nombreProducto": "actimel",
+        "imagen": "actimel.png",
+        "categoriaId": 5
+    },
+    {
+        "id":44,
+        "nombreProducto": "gelatinas",
+        "imagen": "gelatina.png",
+        "categoriaId": 5
+    },
+    {
+        "id":45,
+        "nombreProducto": "Jugos",
+        "imagen": "Jugos.png",
+        "categoriaId": 6
+    },
+    {
+        "id":46,
+        "nombreProducto": "heineken",
+        "imagen": "heineken.png",
+        "categoriaId": 6
+    },
+    {
+        "id":47,
+        "nombreProducto": "coca-cola",
+        "imagen": "coca-cola.png",
+        "categoriaId": 6
+    },
+    {
+        "id":48,
+        "nombreProducto": "vino",
+        "imagen": "vino.png",
+        "categoriaId": 6
+    },
+    {
+        "id":49,
+        "nombreProducto": "dorada",
+        "imagen": "dorada.png",
+        "categoriaId": 6
+    },
+    {
+        "id":50,
+        "nombreProducto": "barra de pan",
+        "imagen": "barra_pan.png",
+        "categoriaId": 7
+    },
+    {
+        "id":51,
+        "nombreProducto": "tortilla",
+        "imagen": "tortilla.png",
+        "categoriaId": 7
+    },
+    {
+        "id":52,
+        "nombreProducto": "tarta",
+        "imagen": "tarta.png",
+        "categoriaId": 7
+    },
+    {
+        "id":53,
+        "nombreProducto": "donus",
+        "imagen": "donus.png",
+        "categoriaId": 7
+    },
+    {
+        "id":54,
+        "nombreProducto": "pan de molde",
+        "imagen": "pan_molde.png",
+        "categoriaId": 7
+    },
+    {
+        "id":55,
+        "nombreProducto": "comida de gatos",
+        "imagen": "comida_gatos.png",
+        "categoriaId": 8
     }
+      
 ]
