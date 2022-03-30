@@ -19,7 +19,6 @@
         "nombreCategory": "Carne y Pescado"
 
     },
-
     {
         "id":5,
         "nombreCategory": "Lacteos"
@@ -38,10 +37,6 @@
     {
         "id":8,
         "nombreCategory": "Productos para Mascotas"
-
     }
-
-
-    
     
 ]
