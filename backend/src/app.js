@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 8000;
 // si esta a true va volver a crear tablas
 db.sequelize.sync({force:false})
 
+// insertamos todos los datos a la DB atraves del
 const insertarDatos = async () => {
     try {
         await seed.insertDatosDB();
@@ -26,7 +27,13 @@ app.use(express.urlencoded({ extended:false }));
 
 app.use(express.static(path.join(__dirname, 'images')));
 
-app.use('/api/',require('./routes/router'));
+//  rutas
+app.use('/api/',require('./routes/routerCategorias'));
+app.use('/api/',require('./routes/routerProductos'));
+app.use('/api/',require('./routes/routerUsuarios'));
+app.use('/api/',require('./routes/routerListaProducto'));
+
+
 
 
 app.listen(PORT, function() {
