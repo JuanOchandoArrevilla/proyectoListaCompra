@@ -35,7 +35,6 @@ app.use('/api/',require('./routes/routerListaProducto'));
 
 
 
-
 app.listen(PORT, function() {
 console.log("funciona");
   
