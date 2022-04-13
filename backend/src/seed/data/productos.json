@@ -330,6 +330,66 @@
         "nombreProducto": "comida de gatos",
         "imagen": "comida_gatos.png",
         "categoriaId": 8
+    },
+    {
+        "id":56,
+        "nombreProducto": "arroz",
+        "imagen": "arroz.png",
+        "categoriaId": 9
+    },
+    {
+        "id":57,
+        "nombreProducto": "espaguetis",
+        "imagen": "spaghetti.png",
+        "categoriaId": 9
+    },
+    {
+        "id":58,
+        "nombreProducto": "cereal",
+        "imagen": "cereal.png",
+        "categoriaId": 9
+    },
+    {
+        "id":59,
+        "nombreProducto": "harina de avena",
+        "imagen": "harina_avena.png",
+        "categoriaId": 9
+    },
+    {
+        "id":60,
+        "nombreProducto": "harina de maiz",
+        "imagen": "harina_maiz.png",
+        "categoriaId": 10
+    },
+    {
+        "id":61,
+        "nombreProducto": "aceite",
+        "imagen": "aceite.png",
+        "categoriaId": 10
+    },
+    {
+        "id":62,
+        "nombreProducto": "azucar",
+        "imagen": "azucar.png",
+        "categoriaId": 10
+    },
+    {
+        "id":63,
+        "nombreProducto": "canela",
+        "imagen": "canela.png",
+        "categoriaId": 10
+    },
+    {
+        "id":64,
+        "nombreProducto": "mayonesa",
+        "imagen": "mayonesa.png",
+        "categoriaId": 10
+    },
+    {
+        "id":65,
+        "nombreProducto": "vinagre",
+        "imagen": "vinagre.png",
+        "categoriaId": 10
     }
       
 ]
