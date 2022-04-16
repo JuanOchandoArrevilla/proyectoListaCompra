@@ -2,7 +2,6 @@
 const URL = "http://192.168.56.1:8000/api/";
 
 
-
 const crearUsuario = (nombre,apellidos,correo, password) => {
     fetch(URL+'usuarios',{
         method: 'POST',
@@ -11,6 +10,23 @@ const crearUsuario = (nombre,apellidos,correo, password) => {
             apellidos,
             correo,
             password
+        }),
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => {
+      console.log(response);
+    });
+};
+
+const productosPorCategoria = (idCategoria) => {
+    fetch(URL+'products',{
+        method: 'GET',
+        body: JSON.stringify({
+            idCategoria
         }),
         headers: {
             Accept: 'application/json',

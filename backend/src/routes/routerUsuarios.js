@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 
 
 dotenv.config();
+
 router.post("/usuarios", async (req, res) => {
     let passwordHash = await bcrypt.hash(req.body.password, 8);
     usuarios
