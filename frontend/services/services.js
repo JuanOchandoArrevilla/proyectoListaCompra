@@ -1,6 +1,5 @@
 
-const URL = "http://192.168.56.1:8000/api/";
-
+const URL = "http://192.168.1.76:8000/api/";
 
 
 const crearUsuario = (nombre,apellidos,correo, password) => {
@@ -11,6 +10,37 @@ const crearUsuario = (nombre,apellidos,correo, password) => {
             apellidos,
             correo,
             password
+        }),
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => {
+      console.log(response);
+    });
+};
+
+const Categorias = () => {
+    fetch(URL+'categorias',{
+        method: 'GET',
+        
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => {
+      console.log(response);
+    });
+};
+const productosPorCategoria = (id) => {
+    fetch(URL+'productosCategoria',{
+        method: 'GET',
+        body: JSON.stringify({
+            id
         }),
         headers: {
             Accept: 'application/json',
@@ -42,4 +72,4 @@ const compararClave = (correo,password) => {
 };
 
 
-module.exports ={crearUsuario, compararClave};
+module.exports ={crearUsuario, compararClave, productosPorCategoria, Categorias};
