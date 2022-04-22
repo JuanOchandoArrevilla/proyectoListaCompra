@@ -32,7 +32,7 @@ app.use('/api/',require('./routes/routerCategorias'));
 app.use('/api/',require('./routes/routerProductos'));
 app.use('/api/',require('./routes/routerUsuarios'));
 app.use('/api/',require('./routes/routerListaProducto'));
-
+app.use('/api/', require('./routes/routerProductosPorCat'));
 
 
 app.listen(PORT, function() {
