@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AccessMenu from "./Screens/AccessMenu";
 import MainMenu from './Screens/MainMenu'
 import Lists from './Screens/Lists';
-
+import CategoryProducts from './components/CategoryProducts';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -28,6 +28,10 @@ export default function App() {
         <Stack.Screen 
           name="Lists"
           component={Lists}
+        />
+        <Stack.Screen 
+          name="CategoryProducts"
+          component={CategoryProducts}
         />
       </Stack.Navigator>
     </NavigationContainer>
