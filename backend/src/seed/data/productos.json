@@ -2,7 +2,7 @@
     {
         "id":1,
         "nombreProducto": "fregasuelo",
-        "imagen": "fregasuelos.png",
+        "imagen": "fregasuelo.png",
         "categoriaId": 1
 
     },
