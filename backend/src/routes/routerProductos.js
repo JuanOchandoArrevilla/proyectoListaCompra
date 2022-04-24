@@ -10,6 +10,8 @@ router.get("/productos/:categoriaId", (req, res) => {
       })
       .then((result) => {
         res.json(result);
+      }).catch((err) => {
+        console.log(err);
       });
   });
 

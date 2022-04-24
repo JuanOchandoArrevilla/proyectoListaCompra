@@ -9,6 +9,8 @@ router.get("/categorias", (req, res) => {
     categorias.findAll({})
     .then((result) => {
       res.json(result);
+    }).catch((err) => {
+      console.log(err);
     });
   });
 

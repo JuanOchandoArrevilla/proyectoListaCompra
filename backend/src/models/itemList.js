@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     itemList.associate = (models) => {
+        
     }
 
     return itemList;

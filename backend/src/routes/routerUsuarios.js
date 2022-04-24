@@ -16,7 +16,9 @@ router.post("/usuarios", async (req, res) => {
     })
     .then((result) => {
       res.json(result);
-    })
+    }).catch((err) => {
+      console.log(err);
+    });
 });
 
 

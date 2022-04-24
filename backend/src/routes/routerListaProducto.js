@@ -13,6 +13,8 @@ router.post("/listasNombre", (req, res) => {
     })
     .then((result) => {
       res.json(result);
+    }).catch((err) => {
+      console.log(err);
     });
 });
 
@@ -23,7 +25,9 @@ router.delete("/listasNombre/:id", (req, res) => {
     }
   }).then((result) => {
     res.json(result);
-  })
+  }).catch((err) => {
+    console.log(err);
+  });
 });
 
 router.get("/listasNombre/:usuarioId", (req, res) => {
@@ -36,6 +40,24 @@ router.get("/listasNombre/:usuarioId", (req, res) => {
     })
     .then((result) => {
       res.json(result);
+    }).catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/listasConProductos/:usuarioId/:nombreLista", (req, res) => {
+  listaProductos
+    .findAll({
+      where: { usuarioId: req.params.usuarioId, nombreLista: req.params.nombreLista
+          },
+      include: [
+        { model: productos }
+      ]
+    })
+    .then((result) => {
+      res.json(result);
+    }).catch((err) => {
+      console.log(err);
     });
 });
 
@@ -48,6 +70,8 @@ router.post("/addProductos", (req, res) => {
     })
     .then((result) => {
       res.json(result);
+    }).catch((err) => {
+      console.log(err);
     });
 });
 
@@ -58,6 +82,8 @@ router.delete("/addProductos/:id", (req, res) => {
     }
   }).then((result) => {
     res.json(result);
+  }).catch((err) => {
+    console.log(err);
   });
 })
 

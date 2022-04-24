@@ -16,7 +16,9 @@ router.get("/productosCategoria/:id", (req, res) => {
         .then((result) => {
             res.json(result);
             console.log(result)
-        });
+        }).catch((err) => {
+            console.log(err);
+          });
 });
 
 module.exports = router
