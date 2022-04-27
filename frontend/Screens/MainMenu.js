@@ -1,13 +1,30 @@
-import {StyleSheet, Text,View,FlatList,Image,TouchableOpacity,SafeAreaView,StatusBar} from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { URL } from "../URL/URL";
+import Card from "../components/Card";
 
 const MainMenu = ({ navigation }) => {
-  const { cerrarSesion, dataUsers, dataLista,eliminarProLista,cestaProductosVacia,setCestaProductosVacia} = useContext(AuthContext);
+  const {
+    cerrarSesion,
+    dataUsers,
+    dataLista,
+    eliminarProLista,
+    cestaProductosVacia,
+    setCestaProductosVacia,
+  } = useContext(AuthContext);
   const [categorias, setCategorias] = useState([]);
   const [cestaProductos, setCestaProductos] = useState([]);
- 
+  const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
     fetch(URL + "api/categorias")
@@ -20,23 +37,32 @@ const MainMenu = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-      
   }, []);
 
   useEffect(() => {
-
-   if (dataLista.productos === undefined) {
-   
-   } else {
-     if (dataLista.productos.length > 0) {
+    if (dataLista.productos === undefined) {
+    } else {
+      if (dataLista.productos.length > 0) {
         setCestaProductosVacia(false);
-       } else {
+      } else {
         setCestaProductosVacia(true);
-       }
+      }
+    }
 
-   }
-    
-    fetch(  URL +"api/listasConProductos/" + dataUsers.id +"/"+dataLista.nombreLista)
+    if (dataLista.nombreLista === undefined) {
+      setMensaje("debe selecionar una lista o crearla")
+    } else {
+      setMensaje("Compra Finalizada ")
+
+    }
+
+    fetch(
+      URL +
+        "api/listasConProductos/" +
+        dataUsers.id +
+        "/" +
+        dataLista.nombreLista
+    )
       .then((res) => {
         return res.json();
       })
@@ -46,21 +72,18 @@ const MainMenu = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-  
-  }, [cestaProductos,dataLista.productos ]);
-  
-  const handleAddProductos = (id,nombreCategory) => {
+  }, [cestaProductos, dataLista.productos]);
+
+  const handleAddProductos = (id, nombreCategory) => {
     if (dataLista.nombreLista === undefined) {
-      alert("no tienes lista creada o elegida")
-    }  else {
+      alert("no tienes lista creada o elegida");
+    } else {
       navigation.navigate("ProductList", {
         idCategoria: id,
         nombreCategory,
-      })
+      });
     }
-  }
-  
-
+  };
 
   return (
     <View style={styles.container}>
@@ -80,73 +103,75 @@ const MainMenu = ({ navigation }) => {
         <Text>Cerrar Sesion</Text>
       </TouchableOpacity>
 
+      {cestaProductosVacia ? (
+        <View style={styles.compraFinalizada}>
+          <Text style={styles.textCompra}>{mensaje} </Text>
+          <Image
+            style={styles.logoCompra}
+            source={require("../assets/compra.jpg")}
+          />
+        </View>
+      ) : (
+        <SafeAreaView style={styles.flatlist}>
+          <FlatList
+            data={cestaProductos}
+            renderItem={(itemData) => {
+              const { nombreLista, productos } = itemData.item;
 
-{cestaProductosVacia ? (<View style={styles.compraFinalizada}>
-          <Text style={styles.textCompra}>Compra Finalizada </Text>
-          <Text style={styles.textCompra}>No quedan productos </Text>
-          <Image style={styles.logoCompra} source={require("../assets/compra.jpg")} />
-        </View>) : ( 
+              return (
+                <View>
+                  <FlatList
+                    data={productos}
+                    renderItem={(itemData) => {
+                      const { nombreProducto, listas_con_productos, imagen } =
+                        itemData.item;
 
-<SafeAreaView style={styles.flatlist}>
+                      return (
+                        <TouchableOpacity
+                          onPress={() =>
+                            eliminarProLista(listas_con_productos.id)
+                          }
+                        >
+                          <View style={styles.contenedor}> 
+                          <Card >
+                            <Text style={styles.textProducto} >{nombreProducto}</Text>
+                            <Image
+                              style={styles.logoProducto}
+                              source={{ uri: URL + imagen }}
+                            />
+                          </Card>
+                          </View>
+                        </TouchableOpacity>
+                      );
+                    }}
+                  />
+                </View>
+              );
+            }}
+          />
+        </SafeAreaView>
+      )}
 
-<FlatList
-  data={cestaProductos}
-  renderItem={(itemData) => {
-    const { nombreLista, productos } = itemData.item;
-    
-
-    return (
-      <View>
+      {/* <SafeAreaView style={styles.flatlist}> */}
         <FlatList
-          data={productos}
-          renderItem={(itemData) => {
-            const { nombreProducto,listas_con_productos, imagen } = itemData.item;
-
-            return (
-               <TouchableOpacity onPress={() => eliminarProLista(listas_con_productos.id)}> 
-              <View>
-                <Text>{nombreProducto}</Text>
-                <Image style={styles.logoCompra} source={{ uri: URL+imagen}}   />
-
-              </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
-    );
-  }}
-/>
-</SafeAreaView>
-
-         ) 
-        
-        
-        }
-       
-            
-      
- 
-      <SafeAreaView style={styles.flatlist}>
-        <FlatList
-          initialNumToRender={5}
+          style={styles.flatlist}
           data={categorias}
           renderItem={(itemData) => {
             const { key, id, nombreCategory } = itemData.item;
             return (
               <TouchableOpacity
-                onPress={() => handleAddProductos(id,nombreCategory)   }
+                onPress={() => handleAddProductos(id, nombreCategory)}
               >
                 <View style={styles.listCategorias}>
-                  <Text style={styles.textCategorias}>{nombreCategory}</Text>
-                 
+                  <Text style={styles.textCategorias}>{nombreCategory}</Text>     
                 </View>
               </TouchableOpacity>
             );
           }}
         />
-      </SafeAreaView>
+      {/* </SafeAreaView> */}
     </View>
+    
   );
 };
 
@@ -187,26 +212,45 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   logoCompra: {
-    top: 30,
-    width: 150,
-    height: 150,
+    top: 10,
+    width: 75,
+    height: 75,
   },
   listCategorias: {
     alignItems: "center",
-    // top:100,
-    // backgroundColor: '#f9c2ff',
-    // padding: 5,
+    backgroundColor: '#33793A',
+    padding: 5,
     marginVertical: 5,
-    // marginHorizontal: 160,
+    borderRadius: 15,
+    height: 40,
+    width: 250,
+    left: 80,
   },
   textCategorias: {
     color: "#FFFFFF",
-    fontSize: 30,
+    fontSize: 20,
   },
   flatlist: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    top:200,
+    marginBottom:250,
+    // marginTop: StatusBar.currentHeight || 0,
+    
   },
+  textProducto: {
+    top:40,
+  }, 
+  logoProducto: {
+    bottom: 55,
+    // right:10,
+    width: 50,
+    height: 50,
+    
+  },
+  contenedor: {
+    flexDirection: "row",
+    flex: 1,
+  }
+ 
 });
 
 export default MainMenu;
