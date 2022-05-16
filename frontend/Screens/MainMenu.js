@@ -1,14 +1,31 @@
-import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, SafeAreaView, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { URL } from "../URL/URL";
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Card from "../components/Card";
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 const MainMenu = ({ navigation }) => {
-  const { cerrarSesion, dataUsers, dataLista, eliminarProLista, cestaProductosVacia, setCestaProductosVacia } = useContext(AuthContext);
+  const {
+    cerrarSesion,
+    dataUsers,
+    dataLista,
+    eliminarProLista,
+    cestaProductosVacia,
+    setCestaProductosVacia,
+  } = useContext(AuthContext);
   const [categorias, setCategorias] = useState([]);
   const [cestaProductos, setCestaProductos] = useState([]);
-
+  const [mensaje, setMensaje] = useState("");
+  const [productosUnicos, setProductosUnicos] = useState([]);
 
   useEffect(() => {
     fetch(URL + "api/categorias")
@@ -21,23 +38,31 @@ const MainMenu = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-
   }, []);
 
   useEffect(() => {
-
     if (dataLista.productos === undefined) {
-
     } else {
       if (dataLista.productos.length > 0) {
         setCestaProductosVacia(false);
       } else {
         setCestaProductosVacia(true);
       }
-
     }
 
-    fetch(URL + "api/listasConProductos/" + dataUsers.id + "/" + dataLista.nombreLista)
+    if (dataLista.nombreLista === undefined) {
+      setMensaje("debe selecionar una lista o crearla");
+    } else {
+      setMensaje("Compra Finalizada ");
+    }
+
+    fetch(
+      URL +
+        "api/listasConProductos/" +
+        dataUsers.id +
+        "/" +
+        dataLista.nombreLista
+    )
       .then((res) => {
         return res.json();
       })
@@ -48,24 +73,25 @@ const MainMenu = ({ navigation }) => {
         console.log(err);
       });
 
+    cestaProductos.map((e) => {
+      setProductosUnicos(e.productos);
+    });
   }, [cestaProductos, dataLista.productos]);
 
   const handleAddProductos = (id, nombreCategory) => {
     if (dataLista.nombreLista === undefined) {
-      alert("no tienes lista creada o elegida")
+      alert("no tienes lista creada o elegida");
     } else {
       navigation.navigate("ProductList", {
         idCategoria: id,
         nombreCategory,
-      })
+      });
     }
-  }
-
-
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <ScrollView>
+      <View style={styles.container}>
         <TouchableOpacity
           style={styles.listas}
           onPress={() =>
@@ -76,85 +102,75 @@ const MainMenu = ({ navigation }) => {
         >
           <Text style={styles.listasText}>Listas</Text>
         </TouchableOpacity>
+        <Text style={styles.nombreLista}>{dataLista.nombreLista}</Text>
 
-        <TouchableOpacity style={styles.butCerrar} onPress={() => cerrarSesion()}>
-          <Text style={styles.textCerrarSesion}>Cerrar sesión</Text>
-
+        <TouchableOpacity
+          style={styles.butCerrar}
+          onPress={() => cerrarSesion()}
+        >
+          <Text>Cerrar Sesion</Text>
         </TouchableOpacity>
 
-      </View>
-      <Text style={styles.nombreLista}>{dataLista.nombreLista}</Text>
 
-
-
-      {cestaProductosVacia ? (<View style={styles.compraFinalizada}>
-        <Text style={styles.textCompra}>Compra Finalizada </Text>
-        <Text style={styles.textCompra}>No quedan productos </Text>
-        <Image style={styles.logoCompra} source={require("../assets/pantallaPrincipal.png")} />
-      </View>) : (
-
-        <SafeAreaView style={styles.flatlist}>
-
-          <FlatList
-            data={cestaProductos}
-            renderItem={(itemData) => {
-              const { nombreLista, productos } = itemData.item;
-
-
+        {cestaProductosVacia ? (
+          <View style={styles.compraFinalizada}>
+            <Text style={styles.textCompra}>{mensaje} </Text>
+            <Image
+              style={styles.logoCompra}
+              source={require("../assets/pantallaPrincipal.png")}
+            />
+          </View>
+        ) : (
+          <View style={styles.contenedorProductos}>
+            {productosUnicos.map((e) => {
               return (
-                <View>
-                  <FlatList
-                    data={productos}
-                    renderItem={(itemData) => {
-                      const { nombreProducto, listas_con_productos, imagen } = itemData.item;
-
-                      return (
-                        <TouchableOpacity onPress={() => eliminarProLista(listas_con_productos.id)}>
-                          <View>
-                            <Text>{nombreProducto}</Text>
-                            <Image style={styles.logoCompra} source={{ uri: URL + imagen }} />
-
-                          </View>
-                        </TouchableOpacity>
-                      );
-                    }}
-                  />
-                </View>
+                <TouchableOpacity
+                  onPress={() => eliminarProLista(e.listas_con_productos.id)}
+                >
+                  <Card >
+                    <Text key={e.id} style={styles.textProducto}>
+                      {e.nombreProducto}
+                    </Text>
+                    <Image
+                      style={styles.logoProducto}
+                      source={{ uri: URL + e.imagen }}
+                    />
+                  </Card>
+                </TouchableOpacity>
               );
-            }}
-          />
-        </SafeAreaView>
+            })}
 
-      )
-      }
-      <SafeAreaView style={styles.flatlist}>
-        <FlatList
-          initialNumToRender={5}
-          data={categorias}
-          renderItem={(itemData) => {
-            const { key, id, nombreCategory } = itemData.item;
+          </View>
+        )}
+
+        <View style={styles.contenedorCategoria}>
+          {categorias.map((e) => {
             return (
               <TouchableOpacity
-                onPress={() => handleAddProductos(id, nombreCategory)}
+               style={styles.listCategorias}
+                onPress={() => handleAddProductos(e.id, e.nombreCategory)}
               >
-                <View style={styles.listCategorias}>
-                  <Text style={styles.textCategorias}>{nombreCategory}</Text>
+                  <Text key={e.id} style={styles.textCategorias}>
+                    {e.nombreCategory}
+                  </Text>
                   <Icon style={styles.icon}
                     name="arrow-right"
                   />
-                </View>
+                
               </TouchableOpacity>
             );
-          }}
-        />
-      </SafeAreaView>
-    </View>
+          })}
+        </View>
+
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  
   container: {
-    
+    top: 50,
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#202620",
@@ -175,13 +191,14 @@ const styles = StyleSheet.create({
     left: 10
   },
   butCerrar: {
-    backgroundColor: "#C4C4C4",
+    padding: 5,
+    left: 260,
     width: 120,
     height: 30,
+    backgroundColor: "#C4C4C4", 
     borderRadius: 5,
-    top: 35,
     alignItems: 'center',
-
+    bottom:50,
   },
   compraFinalizada: {
     alignItems: "center",
@@ -193,20 +210,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   logoCompra: {
-    top: 30,
-    width: 120,
-    height: 120,
-    borderRadius: 60
+    top: 10,
+    width: 75,
+    height: 75,
   },
   listCategorias: {
-    top: 150,
-    backgroundColor: '#33793A',
+    alignItems: "center",
+    backgroundColor: "#33793A",
+    padding: 5,
     marginVertical: 4,
     borderRadius: 8,
+    height: 40,
     width: 240,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-
+    left: 80,
+ 
   },
   textCategorias: {
     color: "#FFF",
@@ -214,27 +231,32 @@ const styles = StyleSheet.create({
     padding: 3,
     fontWeight: 'bold'
   },
-  flatlist: {
+  contenedorCategoria: {
+    top: 70,
+    marginBottom: 250,
+  },
+  textProducto: {
+    top: 40,
+    fontSize: 12,
+  },
+  logoProducto: {
+    bottom: 33,
+    width: 50,
+    height: 50,
+  },
+  contenedorProductos: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-    alignItems:'center'
-    
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    margin: 10
-  },
-  textCerrarSesion: {
-    top: 5
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   icon: {
     color: "#fff",
     fontSize: 20,
-    textAlignVertical: 'center',
-    right: 5,
+    left: 110,
+    bottom: 20,
 
   },
+  
 });
 
 export default MainMenu;
