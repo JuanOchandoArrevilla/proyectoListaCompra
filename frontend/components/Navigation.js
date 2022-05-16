@@ -2,11 +2,11 @@ import { View, Text } from "react-native";
 import React, { useContext, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AccessMenu from "../Screens/AccessMenu";
-import MainMenu from "../Screens/MainMenu";
-import Lists from "../Screens/Lists";
-import ProductList from "../Screens/ProductList";
-import NameList from "../Screens/NameList";
+import AccessMenu from "../screens/AccessMenu";
+import MainMenu from "../screens/MainMenu";
+import Lists from "../screens/Lists";
+import ProductList from "../screens/ProductList";
+import NameList from "../screens/NameList";
 import { AuthContext } from "../context/AuthContext";
 
 const Navigation = () => {
