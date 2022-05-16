@@ -10,10 +10,11 @@ const styles = StyleSheet.create({
   card: {
     width:100,
     height:100,
-    backgroundColor: "white",
+    backgroundColor: "#95A5A6",
     padding: 20,
     marginTop:10,
-    // bottom: 50,
+    marginLeft:10,
+
   },
 });
 

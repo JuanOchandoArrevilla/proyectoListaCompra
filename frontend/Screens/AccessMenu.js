@@ -6,7 +6,7 @@ import {
   Image,
   Button,
 } from "react-native";
-import { useState, useEffect, useContext } from "react";
+import {useContext } from "react";
 import Registrar from "../components/modales/Registrar";
 import Ingresar from "../components/modales/Ingresar";
 import { ContexInput } from "../context/ContexInput";

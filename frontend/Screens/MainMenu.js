@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
+  ScrollView,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -25,6 +26,7 @@ const MainMenu = ({ navigation }) => {
   const [categorias, setCategorias] = useState([]);
   const [cestaProductos, setCestaProductos] = useState([]);
   const [mensaje, setMensaje] = useState("");
+  const [productosUnicos, setProductosUnicos] = useState([]);
 
   useEffect(() => {
     fetch(URL + "api/categorias")
@@ -50,10 +52,9 @@ const MainMenu = ({ navigation }) => {
     }
 
     if (dataLista.nombreLista === undefined) {
-      setMensaje("debe selecionar una lista o crearla")
+      setMensaje("debe selecionar una lista o crearla");
     } else {
-      setMensaje("Compra Finalizada ")
-
+      setMensaje("Compra Finalizada ");
     }
 
     fetch(
@@ -72,6 +73,10 @@ const MainMenu = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
+
+    cestaProductos.map((e) => {
+      setProductosUnicos(e.productos);
+    });
   }, [cestaProductos, dataLista.productos]);
 
   const handleAddProductos = (id, nombreCategory) => {
@@ -86,98 +91,83 @@ const MainMenu = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.listas}
-        onPress={() =>
-          navigation.navigate("Lists", {
-            idUsuario: dataUsers.id,
-          })
-        }
-      >
-        <Text style={styles.listasText}>Listas</Text>
-      </TouchableOpacity>
-      <Text style={styles.nombreLista}>{dataLista.nombreLista}</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.listas}
+          onPress={() =>
+            navigation.navigate("Lists", {
+              idUsuario: dataUsers.id,
+            })
+          }
+        >
+          <Text style={styles.listasText}>Listas</Text>
+        </TouchableOpacity>
+        <Text style={styles.nombreLista}>{dataLista.nombreLista}</Text>
 
-      <TouchableOpacity style={styles.butCerrar} onPress={() => cerrarSesion()}>
-        <Text>Cerrar Sesion</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.butCerrar}
+          onPress={() => cerrarSesion()}
+        >
+          <Text>Cerrar Sesion</Text>
+        </TouchableOpacity>
 
-      {cestaProductosVacia ? (
-        <View style={styles.compraFinalizada}>
-          <Text style={styles.textCompra}>{mensaje} </Text>
-          <Image
-            style={styles.logoCompra}
-            source={require("../assets/compra.jpg")}
-          />
-        </View>
-      ) : (
-        <SafeAreaView style={styles.flatlist}>
-          <FlatList
-            data={cestaProductos}
-            renderItem={(itemData) => {
-              const { nombreLista, productos } = itemData.item;
-
+        {cestaProductosVacia ? (
+          <View style={styles.compraFinalizada}>
+            <Text style={styles.textCompra}>{mensaje} </Text>
+            <Image
+              style={styles.logoCompra}
+              source={require("../assets/compra.jpg")}
+            />
+          </View>
+        ) : (
+          <View style={styles.contenedorProductos}>
+            {productosUnicos.map((e) => {
               return (
-                <View>
-                  <FlatList
-                    data={productos}
-                    renderItem={(itemData) => {
-                      const { nombreProducto, listas_con_productos, imagen } =
-                        itemData.item;
-
-                      return (
-                        <TouchableOpacity
-                          onPress={() =>
-                            eliminarProLista(listas_con_productos.id)
-                          }
-                        >
-                          <View style={styles.contenedor}> 
-                          <Card >
-                            <Text style={styles.textProducto} >{nombreProducto}</Text>
-                            <Image
-                              style={styles.logoProducto}
-                              source={{ uri: URL + imagen }}
-                            />
-                          </Card>
-                          </View>
-                        </TouchableOpacity>
-                      );
-                    }}
-                  />
-                </View>
+                <TouchableOpacity
+                  onPress={() => eliminarProLista(e.listas_con_productos.id)}
+                >
+                  <Card >
+                    <Text key={e.id} style={styles.textProducto}>
+                      {e.nombreProducto}
+                    </Text>
+                    <Image
+                      style={styles.logoProducto}
+                      source={{ uri: URL + e.imagen }}
+                    />
+                  </Card>
+                </TouchableOpacity>
               );
-            }}
-          />
-        </SafeAreaView>
-      )}
+            })}
 
-      {/* <SafeAreaView style={styles.flatlist}> */}
-        <FlatList
-          style={styles.flatlist}
-          data={categorias}
-          renderItem={(itemData) => {
-            const { key, id, nombreCategory } = itemData.item;
+          </View>
+        )}
+
+        <View style={styles.contenedorCategoria}>
+          {categorias.map((e) => {
             return (
               <TouchableOpacity
-                onPress={() => handleAddProductos(id, nombreCategory)}
+                onPress={() => handleAddProductos(e.id, e.nombreCategory)}
               >
                 <View style={styles.listCategorias}>
-                  <Text style={styles.textCategorias}>{nombreCategory}</Text>     
+                  <Text key={e.id} style={styles.textCategorias}>
+                    {e.nombreCategory}
+                  </Text>
                 </View>
               </TouchableOpacity>
             );
-          }}
-        />
-      {/* </SafeAreaView> */}
-    </View>
-    
+          })}
+        </View>
+
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  
   container: {
-    top: 25,
+    top: 50,
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#202620",
@@ -218,7 +208,7 @@ const styles = StyleSheet.create({
   },
   listCategorias: {
     alignItems: "center",
-    backgroundColor: '#33793A',
+    backgroundColor: "#33793A",
     padding: 5,
     marginVertical: 5,
     borderRadius: 15,
@@ -230,27 +220,25 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 20,
   },
-  flatlist: {
-    top:200,
-    marginBottom:250,
-    // marginTop: StatusBar.currentHeight || 0,
-    
+  contenedorCategoria: {
+    top: 70,
+    marginBottom: 250,
   },
   textProducto: {
-    top:40,
-  }, 
+    top: 40,
+    fontSize: 12,
+  },
   logoProducto: {
-    bottom: 55,
-    // right:10,
+    bottom: 33,
     width: 50,
     height: 50,
-    
   },
-  contenedor: {
-    flexDirection: "row",
+  contenedorProductos: {
     flex: 1,
-  }
- 
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  
 });
 
 export default MainMenu;
