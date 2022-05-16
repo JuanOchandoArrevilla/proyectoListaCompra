@@ -1,13 +1,14 @@
-import {StyleSheet, Text,View,FlatList,Image,TouchableOpacity,SafeAreaView,StatusBar} from "react-native";
+import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, SafeAreaView, StatusBar } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { URL } from "../URL/URL";
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const MainMenu = ({ navigation }) => {
-  const { cerrarSesion, dataUsers, dataLista,eliminarProLista,cestaProductosVacia,setCestaProductosVacia} = useContext(AuthContext);
+  const { cerrarSesion, dataUsers, dataLista, eliminarProLista, cestaProductosVacia, setCestaProductosVacia } = useContext(AuthContext);
   const [categorias, setCategorias] = useState([]);
   const [cestaProductos, setCestaProductos] = useState([]);
- 
+
 
   useEffect(() => {
     fetch(URL + "api/categorias")
@@ -20,23 +21,23 @@ const MainMenu = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-      
+
   }, []);
 
   useEffect(() => {
 
-   if (dataLista.productos === undefined) {
-   
-   } else {
-     if (dataLista.productos.length > 0) {
-        setCestaProductosVacia(false);
-       } else {
-        setCestaProductosVacia(true);
-       }
+    if (dataLista.productos === undefined) {
 
-   }
-    
-    fetch(  URL +"api/listasConProductos/" + dataUsers.id +"/"+dataLista.nombreLista)
+    } else {
+      if (dataLista.productos.length > 0) {
+        setCestaProductosVacia(false);
+      } else {
+        setCestaProductosVacia(true);
+      }
+
+    }
+
+    fetch(URL + "api/listasConProductos/" + dataUsers.id + "/" + dataLista.nombreLista)
       .then((res) => {
         return res.json();
       })
@@ -46,87 +47,86 @@ const MainMenu = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-  
-  }, [cestaProductos,dataLista.productos ]);
-  
-  const handleAddProductos = (id,nombreCategory) => {
+
+  }, [cestaProductos, dataLista.productos]);
+
+  const handleAddProductos = (id, nombreCategory) => {
     if (dataLista.nombreLista === undefined) {
       alert("no tienes lista creada o elegida")
-    }  else {
+    } else {
       navigation.navigate("ProductList", {
         idCategoria: id,
         nombreCategory,
       })
     }
   }
-  
+
 
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.listas}
-        onPress={() =>
-          navigation.navigate("Lists", {
-            idUsuario: dataUsers.id,
-          })
-        }
-      >
-        <Text style={styles.listasText}>Listas</Text>
-      </TouchableOpacity>
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.listas}
+          onPress={() =>
+            navigation.navigate("Lists", {
+              idUsuario: dataUsers.id,
+            })
+          }
+        >
+          <Text style={styles.listasText}>Listas</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.butCerrar} onPress={() => cerrarSesion()}>
+          <Text style={styles.textCerrarSesion}>Cerrar sesión</Text>
+
+        </TouchableOpacity>
+
+      </View>
       <Text style={styles.nombreLista}>{dataLista.nombreLista}</Text>
 
-      <TouchableOpacity style={styles.butCerrar} onPress={() => cerrarSesion()}>
-        <Text>Cerrar Sesion</Text>
-      </TouchableOpacity>
 
 
-{cestaProductosVacia ? (<View style={styles.compraFinalizada}>
-          <Text style={styles.textCompra}>Compra Finalizada </Text>
-          <Text style={styles.textCompra}>No quedan productos </Text>
-          <Image style={styles.logoCompra} source={require("../assets/compra.jpg")} />
-        </View>) : ( 
+      {cestaProductosVacia ? (<View style={styles.compraFinalizada}>
+        <Text style={styles.textCompra}>Compra Finalizada </Text>
+        <Text style={styles.textCompra}>No quedan productos </Text>
+        <Image style={styles.logoCompra} source={require("../assets/pantallaPrincipal.png")} />
+      </View>) : (
 
-<SafeAreaView style={styles.flatlist}>
+        <SafeAreaView style={styles.flatlist}>
 
-<FlatList
-  data={cestaProductos}
-  renderItem={(itemData) => {
-    const { nombreLista, productos } = itemData.item;
-    
+          <FlatList
+            data={cestaProductos}
+            renderItem={(itemData) => {
+              const { nombreLista, productos } = itemData.item;
 
-    return (
-      <View>
-        <FlatList
-          data={productos}
-          renderItem={(itemData) => {
-            const { nombreProducto,listas_con_productos, imagen } = itemData.item;
 
-            return (
-               <TouchableOpacity onPress={() => eliminarProLista(listas_con_productos.id)}> 
-              <View>
-                <Text>{nombreProducto}</Text>
-                <Image style={styles.logoCompra} source={{ uri: URL+imagen}}   />
+              return (
+                <View>
+                  <FlatList
+                    data={productos}
+                    renderItem={(itemData) => {
+                      const { nombreProducto, listas_con_productos, imagen } = itemData.item;
 
-              </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
-    );
-  }}
-/>
-</SafeAreaView>
+                      return (
+                        <TouchableOpacity onPress={() => eliminarProLista(listas_con_productos.id)}>
+                          <View>
+                            <Text>{nombreProducto}</Text>
+                            <Image style={styles.logoCompra} source={{ uri: URL + imagen }} />
 
-         ) 
-        
-        
-        }
-       
-            
-      
- 
+                          </View>
+                        </TouchableOpacity>
+                      );
+                    }}
+                  />
+                </View>
+              );
+            }}
+          />
+        </SafeAreaView>
+
+      )
+      }
       <SafeAreaView style={styles.flatlist}>
         <FlatList
           initialNumToRender={5}
@@ -135,11 +135,13 @@ const MainMenu = ({ navigation }) => {
             const { key, id, nombreCategory } = itemData.item;
             return (
               <TouchableOpacity
-                onPress={() => handleAddProductos(id,nombreCategory)   }
+                onPress={() => handleAddProductos(id, nombreCategory)}
               >
                 <View style={styles.listCategorias}>
                   <Text style={styles.textCategorias}>{nombreCategory}</Text>
-                 
+                  <Icon style={styles.icon}
+                    name="arrow-right"
+                  />
                 </View>
               </TouchableOpacity>
             );
@@ -152,7 +154,7 @@ const MainMenu = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    top: 25,
+    
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#202620",
@@ -169,14 +171,17 @@ const styles = StyleSheet.create({
     top: 20,
     color: "#FFFFFF",
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 26,
+    left: 10
   },
   butCerrar: {
-    alignItems: "flex-end",
     backgroundColor: "#C4C4C4",
-    padding: 10,
-    width: 105,
-    left: 300,
+    width: 120,
+    height: 30,
+    borderRadius: 5,
+    top: 35,
+    alignItems: 'center',
+
   },
   compraFinalizada: {
     alignItems: "center",
@@ -184,28 +189,51 @@ const styles = StyleSheet.create({
   },
   textCompra: {
     color: "#FFFFFF",
-    fontSize: 20,
+    fontSize: 24,
+    fontWeight: 'bold'
   },
   logoCompra: {
     top: 30,
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 120,
+    borderRadius: 60
   },
   listCategorias: {
-    alignItems: "center",
-    // top:100,
-    // backgroundColor: '#f9c2ff',
-    // padding: 5,
-    marginVertical: 5,
-    // marginHorizontal: 160,
+    top: 150,
+    backgroundColor: '#33793A',
+    marginVertical: 4,
+    borderRadius: 8,
+    width: 240,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+
   },
   textCategorias: {
-    color: "#FFFFFF",
-    fontSize: 30,
+    color: "#FFF",
+    fontSize: 20,
+    padding: 3,
+    fontWeight: 'bold'
   },
   flatlist: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+    alignItems:'center'
+    
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10
+  },
+  textCerrarSesion: {
+    top: 5
+  },
+  icon: {
+    color: "#fff",
+    fontSize: 20,
+    textAlignVertical: 'center',
+    right: 5,
+
   },
 });
 
