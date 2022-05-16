@@ -4,12 +4,14 @@ import Input from "../Input";
 import { AuthContext } from "../../context/AuthContext";
 import { ContexInput } from "../../context/ContexInput";
 import AppLoader from "../AppLoader";
+import Icon from 'react-native-vector-icons/FontAwesome'
+
 
 const Ingresar = () => {
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const { ingresarUsuario, loginPending, errorIngresar } = useContext(AuthContext);
-  const { showModalIngresar,setShowModalIngresar } = useContext(ContexInput);
+  const { showModalIngresar, setShowModalIngresar } = useContext(ContexInput);
 
   return (
     <Modal visible={showModalIngresar}>
@@ -18,32 +20,46 @@ const Ingresar = () => {
       <View style={styles.container}>
         <Text style={styles.title}> Iniciar Sesión</Text>
 
-        <Input
-         style={styles.inputData}
-         placeholder="correo"
-         onChangeText={setCorreo} 
-         value={correo} />
-        <Input
-          style={styles.inputData}
-          placeholder="contraseña"
-          onChangeText={setPassword}
-          value={password}
-          secureTextEntry={true}
-        />
+        <View style={styles.inputs}>
+          <View style={styles.inputCont}>
+            <Input
+              style={styles.inputData}
+              placeholder="correo"
+              onChangeText={setCorreo}
+              value={correo} />
+            <Icon style={styles.icon}
+              name="envelope"
+            />
+          </View>
+          <View style={styles.inputCont}>
+            <Input
+              style={styles.inputData}
+              placeholder="contraseña"
+              onChangeText={setPassword}
+              value={password}
+              secureTextEntry={true}
+            />
+            <Icon style={styles.icon}
+              name="unlock"
+            />
+          </View>
+        </View>
 
-        <TouchableOpacity
-          style={styles.botIngresar}
-          onPress={() => ingresarUsuario(correo, password)}>
-          <Text>Ingresar</Text>
-        </TouchableOpacity>
-        {errorIngresar && <Text>correo o contraseña incorrecto</Text>}
+        <View style={styles.buttonsCont}>
+          <TouchableOpacity
+            style={styles.botIngresar}
+            onPress={() => ingresarUsuario(correo, password)}>
+            <Text>Ingresar</Text>
+          </TouchableOpacity>
+          {errorIngresar && <Text>correo o contraseña incorrecto</Text>}
 
-        <TouchableOpacity
-          style={styles.botNoTengo}
-          onPress={() => setShowModalIngresar(false) }
+          <TouchableOpacity
+            style={styles.botNoTengo}
+            onPress={() => setShowModalIngresar(false)}
           >
-          <Text>No tengo cuenta</Text>
-        </TouchableOpacity>
+            <Text>No tengo cuenta</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </Modal>
   );
@@ -61,26 +77,45 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     color: 'white',
-    bottom: 80,
+    bottom: 120,
   },
   botIngresar: {
     backgroundColor: "#C4C4C4",
     padding: 10,
     top: 30,
-    borderRadius: 5
-
+    borderRadius: 5,
+    width: 140,
+    alignItems: 'center'
   },
-  botNoTengo:{
+  botNoTengo: {
     backgroundColor: "#C4C4C4",
     padding: 10,
     top: 50,
-    borderRadius: 5
+    borderRadius: 5,
+    width: 140,
+    alignItems: 'center',
+
   },
   inputData: {
     borderRadius: 5,
     color: 'white',
 
+  },
+  inputCont: {
+    flexDirection: "row",
+    justifyContent: 'center'
+  },
+  icon: {
+    color: "#fff",
+    fontSize: 20,
+    right: 30,
+    top: 10
+  },
+  inputs: {
+    left: 10,
+    bottom: 20
   }
+
 
 })
 

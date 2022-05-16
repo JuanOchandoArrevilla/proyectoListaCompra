@@ -13,6 +13,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { URL } from "../URL/URL";
 import Card from "../components/Card";
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 const MainMenu = ({ navigation }) => {
   const {
@@ -112,12 +114,13 @@ const MainMenu = ({ navigation }) => {
           <Text>Cerrar Sesion</Text>
         </TouchableOpacity>
 
+
         {cestaProductosVacia ? (
           <View style={styles.compraFinalizada}>
             <Text style={styles.textCompra}>{mensaje} </Text>
             <Image
               style={styles.logoCompra}
-              source={require("../assets/compra.jpg")}
+              source={require("../assets/pantallaPrincipal.png")}
             />
           </View>
         ) : (
@@ -147,13 +150,16 @@ const MainMenu = ({ navigation }) => {
           {categorias.map((e) => {
             return (
               <TouchableOpacity
+               style={styles.listCategorias}
                 onPress={() => handleAddProductos(e.id, e.nombreCategory)}
               >
-                <View style={styles.listCategorias}>
                   <Text key={e.id} style={styles.textCategorias}>
                     {e.nombreCategory}
                   </Text>
-                </View>
+                  <Icon style={styles.icon}
+                    name="arrow-right"
+                  />
+                
               </TouchableOpacity>
             );
           })}
@@ -187,11 +193,14 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   butCerrar: {
-    alignItems: "flex-end",
-    backgroundColor: "#C4C4C4",
-    padding: 10,
-    width: 105,
-    left: 300,
+    padding: 5,
+    left: 260,
+    width: 120,
+    height: 30,
+    backgroundColor: "#C4C4C4", 
+    borderRadius: 5,
+    alignItems: 'center',
+    bottom:50,
   },
   compraFinalizada: {
     alignItems: "center",
@@ -210,15 +219,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#33793A",
     padding: 5,
-    marginVertical: 5,
-    borderRadius: 15,
+    marginVertical: 4,
+    borderRadius: 8,
     height: 40,
-    width: 250,
+    width: 240,
     left: 80,
+ 
   },
   textCategorias: {
-    color: "#FFFFFF",
+    color: "#FFF",
     fontSize: 20,
+    padding: 3,
+    fontWeight: 'bold'
   },
   contenedorCategoria: {
     top: 70,
@@ -237,6 +249,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  icon: {
+    color: "#fff",
+    fontSize: 20,
+    left: 110,
+    bottom: 20,
+
   },
   
 });

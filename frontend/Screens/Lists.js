@@ -10,6 +10,8 @@ import {
 import React, { useState, useEffect, useContext } from "react";
 import { URL } from "../URL/URL";
 import { AuthContext } from "../context/AuthContext";
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 const Lists = ({ route, navigation }) => {
   const { idUsuario } = route.params;
@@ -54,26 +56,36 @@ const Lists = ({ route, navigation }) => {
           return (
             
               <TouchableOpacity
-                style={styles.butContenedor}
+                 style={styles.listsCont}
                 onPress={() => envioNombreLista(e)}
               >
-                <Text key={e.id} style={styles.texto}> {e.nombreLista} </Text>   
-                {cantidad}
-               
+              
+                      <View style={styles.textIcon}>
+                        <Text key={e.id} style={styles.listName}>{e.nombreLista}</Text>
+                        <Icon style={styles.icon}
+                          name="gear"
+                        />
+                      {cantidad}
+
+                      </View>
+
               </TouchableOpacity>
           );
         })}
 
             <TouchableOpacity
-              style={styles.cardButton}
-              onPress={() =>
-                navigation.navigate("NameList", {
-                  idUsuario,
-                })
-              }
-            >
-              <Text style={styles.texto}>Nueva Lista</Text>
-            </TouchableOpacity>
+            onPress={() =>
+              navigation.navigate("NameList", {
+                idUsuario,
+              })
+            }
+            style={styles.newListButton}
+          >
+              <Text style={styles.newList}>Nueva Lista</Text>
+              <Icon style={styles.iconCircle}
+                name="plus-circle"
+              />
+          </TouchableOpacity>
             </ScrollView>
       </View>
     
@@ -88,32 +100,62 @@ const styles = StyleSheet.create({
     paddingLeft: 55,
 
   },
-  butContenedor: {
-    width: 280,
-    height: 90,
-    backgroundColor: "#95A5A6",
-    padding: 20,
-    marginTop: 10,
-    marginLeft: 10,
-  },
-  cardButton: {
-    width: 280,
-    height: 40,
-    backgroundColor: "#373435",
-    marginTop: 10,
-    marginLeft: 10,
-    marginBottom: 25,
-    paddingLeft:75 ,
-    paddingTop: 10,
-  },
+ 
+  
   texto: {
     color:'white'
   },
   cantidadProductos:{
+    position: 'absolute',
     width: 90,
     height: 20,
+    right: 170,
+    top:30,
     backgroundColor: 'red'
-  }
+  },
+  listsCont: {
+
+    width: 270,
+    height: 90,
+    backgroundColor: '#fff',
+    marginTop: 10,
+    marginLeft: 10,
+  },
+   textIcon: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 5,
+    
+  },
+  listName: {
+    color: 'green',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  iconCircle: {
+    color: "#000",
+    fontSize: 30,
+    left: -110,
+  },
+  newListButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 5,
+    left:30,
+  },
+  newList: {
+    width: 230,
+    backgroundColor: '#33793A',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlignVertical: 'center',
+    borderRadius: 5
+  },
+  icon: {
+    color: "#000",
+    fontSize: 30,
+  },
 });
 
 export default Lists;

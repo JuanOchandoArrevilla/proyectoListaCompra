@@ -19,12 +19,12 @@ const Registar = () => {
   const [errorApellidos, setErrorApellidos] = useState("");
   const [errorCorreo, setErrorCorreo] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
-  const [ingresar,setIngresar] = useState(false);
+  const [ingresar, setIngresar] = useState(false);
   const { registrarUsuario, showModalRegistrar, setShowModalRegistrar } =
     useContext(ContexInput);
   const { loginPending, setLoginPending } = useContext(AuthContext);
 
-  
+
   useEffect(() => {
     let validaNombre = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     let validaEmail =
@@ -86,40 +86,43 @@ const Registar = () => {
       {loginPending ? <AppLoader /> : null}
 
       <View style={styles.container}>
-        <Text style={styles.title}> Introduce datos para registrarse</Text>
+        <Text style={styles.title}> Introduce datos para registrarte</Text>
         <Input
           style={styles.inputData}
-          placeholder="nombre"
+          placeholder="Nombre"
           onChangeText={setNombre}
         />
         {validarNombre && <Text>{errorNombre}</Text>}
         <Input
           style={styles.inputData}
-          placeholder="apellidos"
+          placeholder="Apellidos"
           onChangeText={setApellidos}
           value={apellidos}
         />
         {validarApellidos && <Text>{errorApellidos}</Text>}
 
         <Input
-         style={styles.inputData}
-         placeholder="correo"
-         onChangeText={setCorreo} 
-         value={correo} />
+          style={styles.inputData}
+          placeholder="Correo"
+          onChangeText={setCorreo}
+          value={correo} />
         {validarCorreo && <Text>{errorCorreo}</Text>}
 
         <Input
           style={styles.inputData}
-          placeholder="contraseña"
+          placeholder="Contraseña"
           onChangeText={setPassword}
           value={password}
           secureTextEntry={true}
         />
         {validarPassword && <Text>{errorPassword}</Text>}
 
-        <TouchableOpacity style={styles.botIngresar} onPress={() => datos()}>
+        <TouchableOpacity
+          style={styles.botIngresar}
+          onPress={() => datos()}>
           <Text>Registrar</Text>
         </TouchableOpacity>
+
         {ingresar && <Text>error al ingresar datos</Text>}
         <TouchableOpacity
           style={styles.botVolver}
@@ -151,14 +154,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#C4C4C4",
     padding: 10,
     borderRadius: 15,
+    width: 100,
+    alignItems: 'center',
   },
   botVolver: {
     backgroundColor: "#C4C4C4",
     padding: 10,
     borderRadius: 15,
-    top:20,
+    top: 20,
+    width: 100,
+    alignItems: 'center',
   },
-  inputData:{
+  inputData: {
     borderRadius: 5,
     color: 'white'
   }
