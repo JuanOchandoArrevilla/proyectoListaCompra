@@ -16,7 +16,6 @@ const [cestaProductosVacia, setCestaProductosVacia] = useState(true);
 
 
 
-
     const ingresarUsuario = async (correo,password) => {
         setLoginPending(true);
         
@@ -39,7 +38,6 @@ const [cestaProductosVacia, setCestaProductosVacia] = useState(true);
             } else {
                 setIslogueado(true);
                 setLoginPending(false);
-                console.log(data);
                 setDataUsers(data)
             }
         })
@@ -52,6 +50,7 @@ const [cestaProductosVacia, setCestaProductosVacia] = useState(true);
          setIslogueado(false);
          setDataLista([]);
          setCestaProductosVacia(true);
+         setErrorIngresar(false);
     }
 
     const crearNombreLista = async(nombreLista,usuarioId) => {
@@ -112,6 +111,8 @@ const [cestaProductosVacia, setCestaProductosVacia] = useState(true);
         
         
     }
+
+    
   
 
 
@@ -135,7 +136,8 @@ const [cestaProductosVacia, setCestaProductosVacia] = useState(true);
             updateMisListas, 
             setUpdateMisListas,
             cestaProductosVacia, 
-            setCestaProductosVacia
+            setCestaProductosVacia,
+            setErrorIngresar,
            
            
            

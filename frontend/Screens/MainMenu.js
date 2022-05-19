@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -80,7 +81,15 @@ const MainMenu = ({ navigation }) => {
 
   const handleAddProductos = (id, nombreCategory) => {
     if (dataLista.nombreLista === undefined) {
-      alert("no tienes lista creada o elegida");
+
+      Alert.alert("error",
+      "no tienes lista creada o elegida", [{
+        text:"ok",
+        onPress: () => navigation.navigate("Lists", {
+          idUsuario: dataUsers.id,
+        }),
+      style:"destructive"
+  }])
     } else {
       navigation.navigate("ProductList", {
         idCategoria: id,
@@ -123,13 +132,16 @@ const MainMenu = ({ navigation }) => {
         ) : (
           <View style={styles.contenedorProductos}>
             {productosUnicos.map((e) => {
+                
+
               return (
                 <TouchableOpacity
                   onPress={() => eliminarProLista(e.listas_con_productos.id)}
                 >
                   <Card >
-                    <Text key={e.id} style={styles.textProducto}>
+                    <Text key={e.listas_con_productos.id} style={styles.textProducto}>
                       {e.nombreProducto}
+                      
                     </Text>
                     <Image
                       style={styles.logoProducto}

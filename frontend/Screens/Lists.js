@@ -4,8 +4,6 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  FlatList,
-  StatusBar,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { URL } from "../URL/URL";
@@ -33,10 +31,29 @@ const Lists = ({ route, navigation }) => {
     setUpdateMisListas(false);
   }, [updateMisListas]);
 
+    
+
   const envioNombreLista = (objLista) => {
     setDataLista(objLista);
     navigation.navigate("MainMenu");
   };
+  
+  const eliminarLista = async(id) => {
+
+    await fetch(URL+'api/listasNombre/'+id, 
+      { method: 'DELETE',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+      } 
+  }).then((res) => res.json())
+      .then((data) => {      
+         setUpdateMisListas(true);
+
+              console.log(data);
+      }).catch((error) => console.error('Error:', error))
+  
+}
 
   return (
    
@@ -62,9 +79,11 @@ const Lists = ({ route, navigation }) => {
               
                       <View style={styles.textIcon}>
                         <Text key={e.id} style={styles.listName}>{e.nombreLista}</Text>
+                       <TouchableOpacity onPress={() => eliminarLista(e.id)} >
                         <Icon style={styles.icon}
                           name="gear"
                         />
+                        </TouchableOpacity> 
                       {cantidad}
 
                       </View>
