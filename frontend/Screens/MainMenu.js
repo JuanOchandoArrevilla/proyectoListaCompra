@@ -104,16 +104,15 @@ const MainMenu = ({ navigation }) => {
               return (
                 <View>
                   <FlatList
+                    numColumns={3}
                     data={productos}
                     renderItem={(itemData) => {
                       const { nombreProducto, listas_con_productos, imagen } = itemData.item;
-
                       return (
                         <TouchableOpacity onPress={() => eliminarProLista(listas_con_productos.id)}>
-                          <View>
+                          <View style={styles.productsView}>
                             <Text>{nombreProducto}</Text>
                             <Image style={styles.logoCompra} source={{ uri: URL + imagen }} />
-
                           </View>
                         </TouchableOpacity>
                       );
@@ -154,7 +153,6 @@ const MainMenu = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#202620",
@@ -193,10 +191,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   logoCompra: {
-    top: 30,
-    width: 120,
-    height: 120,
-    borderRadius: 60
+    width: 80,
+    height: 80,
   },
   listCategorias: {
     top: 150,
@@ -206,7 +202,14 @@ const styles = StyleSheet.create({
     width: 240,
     flexDirection: 'row',
     justifyContent: 'space-between'
-
+  },
+  productsView: {
+    backgroundColor: '#DDD',
+    width: 100,
+    height: 100,
+    alignItems: 'center',
+    margin: 5,
+    borderRadius: 10
   },
   textCategorias: {
     color: "#FFF",
@@ -217,8 +220,8 @@ const styles = StyleSheet.create({
   flatlist: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
-    alignItems:'center'
-    
+    alignItems: 'center'
+
   },
   header: {
     flexDirection: 'row',
