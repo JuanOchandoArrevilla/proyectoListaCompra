@@ -38,8 +38,8 @@
     },
     {
         "id":7,
-        "nombreProducto": "cololias",
-        "imagen": "cololias.png",
+        "nombreProducto": "colonias",
+        "imagen": "colonias.png",
         "categoriaId": 2
     },
     {
@@ -60,12 +60,7 @@
         "imagen": "pasta_diente.png",
         "categoriaId": 2
     },
-    {
-        "id":11,
-        "nombreProducto": "mascarilla",
-        "imagen": "mascarilla.png",
-        "categoriaId": 2
-    },
+   
     {
         "id":12,
         "nombreProducto": "gel hidracolico",
@@ -267,8 +262,8 @@
     },
     {
         "id":45,
-        "nombreProducto": "Jugos",
-        "imagen": "Jugos.png",
+        "nombreProducto": "jugos",
+        "imagen": "jugos.png",
         "categoriaId": 6
     },
     {

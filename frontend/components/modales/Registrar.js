@@ -11,10 +11,10 @@ const Registar = () => {
   const [apellidos, setApellidos] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
-  const [validarNombre, setValidarNombre] = useState(false);
-  const [validarApellidos, setValidarApellidos] = useState(false);
-  const [validarCorreo, setValidarCorreo] = useState(false);
-  const [validarPassword, setValidarPassword] = useState(false);
+  const [validarNombre, setValidarNombre] = useState(null);
+  const [validarApellidos, setValidarApellidos] = useState(null);
+  const [validarCorreo, setValidarCorreo] = useState(null);
+  const [validarPassword, setValidarPassword] = useState(null);
   const [errorNombre, setErrorNombre] = useState("");
   const [errorApellidos, setErrorApellidos] = useState("");
   const [errorCorreo, setErrorCorreo] = useState("");
@@ -29,7 +29,7 @@ const Registar = () => {
     let validaNombre = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     let validaEmail =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+    
     if (!validaNombre.test(nombre)) {
       setValidarNombre(true);
       setErrorNombre("introduzca nombre correcto");
@@ -57,9 +57,11 @@ const Registar = () => {
     } else {
       setValidarPassword(false);
     }
+
   }, [nombre, correo, apellidos, password]);
 
   const datos = () => {
+
     setLoginPending(true);
     if (
       !validarNombre &&
@@ -74,14 +76,17 @@ const Registar = () => {
       setCorreo("");
       setPassword("");
       setLoginPending(false);
+      
+
     } else {
+
       setIngresar(true);
       setLoginPending(false);
     }
+    
   };
 
   return (
-    // animationType={'fade' } transparent={true}
     <Modal visible={showModalRegistrar}>
       {loginPending ? <AppLoader /> : null}
 
@@ -92,21 +97,21 @@ const Registar = () => {
           placeholder="Nombre"
           onChangeText={setNombre}
         />
-        {validarNombre && <Text>{errorNombre}</Text>}
+        {validarNombre && <Text style={styles.textoError}>{errorNombre}</Text>}
         <Input
           style={styles.inputData}
           placeholder="Apellidos"
           onChangeText={setApellidos}
           value={apellidos}
         />
-        {validarApellidos && <Text>{errorApellidos}</Text>}
+        {validarApellidos && < Text style={styles.textoError}>{errorApellidos}</Text>}
 
         <Input
           style={styles.inputData}
           placeholder="Correo"
           onChangeText={setCorreo}
           value={correo} />
-        {validarCorreo && <Text>{errorCorreo}</Text>}
+        {validarCorreo && <Text style={styles.textoError}>{errorCorreo}</Text>}
 
         <Input
           style={styles.inputData}
@@ -115,7 +120,7 @@ const Registar = () => {
           value={password}
           secureTextEntry={true}
         />
-        {validarPassword && <Text>{errorPassword}</Text>}
+        {validarPassword && <Text style={styles.textoError}>{errorPassword}</Text>}
 
         <TouchableOpacity
           style={styles.botIngresar}
@@ -123,7 +128,12 @@ const Registar = () => {
           <Text>Registrar</Text>
         </TouchableOpacity>
 
-        {ingresar && <Text>error al ingresar datos</Text>}
+        {ingresar && 
+        
+        
+          <Text style={styles.textoError}>error al ingresar datos</Text>}
+
+        
         <TouchableOpacity
           style={styles.botVolver}
           onPress={() => setShowModalRegistrar(false)}
@@ -168,6 +178,10 @@ const styles = StyleSheet.create({
   inputData: {
     borderRadius: 5,
     color: 'white'
+  },
+  textoError: {
+    color: 'red',
+    fontSize: 20
   }
 
 })

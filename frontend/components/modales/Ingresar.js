@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Modal, TouchableOpacity,Alert } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import Input from "../Input";
 import { AuthContext } from "../../context/AuthContext";
@@ -10,9 +10,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 const Ingresar = () => {
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
-  const { ingresarUsuario, loginPending, errorIngresar } = useContext(AuthContext);
+  const { ingresarUsuario, loginPending, errorIngresar,setErrorIngresar } = useContext(AuthContext);
   const { showModalIngresar, setShowModalIngresar } = useContext(ContexInput);
-
   return (
     <Modal visible={showModalIngresar}>
       {loginPending ? <AppLoader /> : null}
@@ -45,14 +44,22 @@ const Ingresar = () => {
           </View>
         </View>
 
-        <View style={styles.buttonsCont}>
+        <View style={styles.inputCont}>
           <TouchableOpacity
             style={styles.botIngresar}
             onPress={() => ingresarUsuario(correo, password)}>
             <Text>Ingresar</Text>
           </TouchableOpacity>
-          {errorIngresar && <Text>correo o contraseña incorrecto</Text>}
-
+          {errorIngresar &&    
+          Alert.alert("error",
+          "correo o contraseña incorrecto", [{
+            text:"ok",
+            onPress: () => setErrorIngresar(false),
+          style:"destructive"
+      }])
+          
+      
+      }
           <TouchableOpacity
             style={styles.botNoTengo}
             onPress={() => setShowModalIngresar(false)}
@@ -80,19 +87,23 @@ const styles = StyleSheet.create({
     bottom: 120,
   },
   botIngresar: {
+    position: "absolute",
     backgroundColor: "#C4C4C4",
     padding: 10,
     top: 30,
     borderRadius: 5,
     width: 140,
-    alignItems: 'center'
+    alignItems: 'center',
+
   },
   botNoTengo: {
+    position: "absolute",
     backgroundColor: "#C4C4C4",
     padding: 10,
     top: 50,
     borderRadius: 5,
     width: 140,
+    marginTop: 40,
     alignItems: 'center',
 
   },
@@ -114,7 +125,8 @@ const styles = StyleSheet.create({
   inputs: {
     left: 10,
     bottom: 20
-  }
+  },
+  
 
 
 })

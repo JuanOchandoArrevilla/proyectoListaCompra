@@ -1,19 +1,38 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React, { useState, useEffect, useContext } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
+import React, { useState, useContext } from 'react'
 import Input from '../components/Input';
 import { AuthContext } from '../context/AuthContext';
 const NameList = ({ route, navigation }) => {
 
   const { idUsuario } = route.params;
   const [nombreLista, setNombreLista] = useState("");
-  const { crearNombreLista } = useContext(AuthContext);
+  const { crearNombreLista, temaColor,dataUsers } = useContext(AuthContext);
 
+
+  const validarNombreLista = (nombreLista,idUsuario) => {
+    if (nombreLista === undefined || nombreLista === "") {
+      Alert.alert("error",
+      "introduzca un dato", [{
+        text:"ok",
+      style:"destructive"
+  }])
+    } else {
+      crearNombreLista(nombreLista, idUsuario);
+      setNombreLista("");
+       
+        navigation.navigate("Lists", {
+          idUsuario: dataUsers.id,
+        })
+
+    }
+
+  }
 
   return (
-    <View style={styles.container}>
+    <View style={temaColor ? styles.containerClaro :styles.container}>
       <View style={styles.input}>
         <Input placeholder="Nombre de Lista" onChangeText={setNombreLista} value={nombreLista} />
-        <TouchableOpacity onPress={() => crearNombreLista(nombreLista, idUsuario)}
+        <TouchableOpacity onPress={() => validarNombreLista(nombreLista,idUsuario) }
           style={styles.button}
         >
           <Text style={styles.saveText}>Crear lista</Text>
@@ -29,6 +48,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#202620",
+  },
+  containerClaro: {
+    flexDirection: "column",
+    flex: 1,
+    backgroundColor: "#C0CCCD",
   },
   input: {
     width: 300,

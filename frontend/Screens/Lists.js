@@ -4,8 +4,6 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  FlatList,
-  StatusBar,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { URL } from "../URL/URL";
@@ -15,7 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Lists = ({ route, navigation }) => {
   const { idUsuario } = route.params;
-  const { setDataLista, updateMisListas, setUpdateMisListas } =
+  const { setDataLista, updateMisListas, setUpdateMisListas, temaColor } =
     useContext(AuthContext);
   const [mislistas, setMisListas] = useState([]);
 
@@ -33,22 +31,40 @@ const Lists = ({ route, navigation }) => {
     setUpdateMisListas(false);
   }, [updateMisListas]);
 
+    
+
   const envioNombreLista = (objLista) => {
     setDataLista(objLista);
     navigation.navigate("MainMenu");
   };
+  
+  const eliminarLista = async(id) => {
+
+    await fetch(URL+'api/listasNombre/'+id, 
+      { method: 'DELETE',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+      } 
+  }).then((res) => res.json())
+      .then((data) => {      
+         setUpdateMisListas(true);
+
+              console.log(data);
+      }).catch((error) => console.error('Error:', error))
+  
+}
 
   return (
    
-      <View style={styles.container}>
+      <View style={temaColor ? styles.containerClaro : styles.container}>
          <ScrollView>
-        {mislistas.map((e) => {
+        {mislistas.map((e, index) => {
         let cantidad = null;
-
           if (e.productos.length > 0) {
              cantidad = (
-              <View style={styles.cantidadProductos}>
-             <Text style={styles.texto}>{e.productos.length} productos </Text>
+              <View  style={styles.cantidadProductos}>
+             <Text  style={styles.texto}>{e.productos.length} productos </Text>
              </View>)
 
           } 
@@ -56,15 +72,18 @@ const Lists = ({ route, navigation }) => {
           return (
             
               <TouchableOpacity
+              key={index}
                  style={styles.listsCont}
                 onPress={() => envioNombreLista(e)}
               >
               
                       <View style={styles.textIcon}>
-                        <Text key={e.id} style={styles.listName}>{e.nombreLista}</Text>
+                        <Text  style={styles.listName}>{e.nombreLista}</Text>
+                       <TouchableOpacity onPress={() => eliminarLista(e.id)} >
                         <Icon style={styles.icon}
                           name="gear"
                         />
+                        </TouchableOpacity> 
                       {cantidad}
 
                       </View>
@@ -100,7 +119,12 @@ const styles = StyleSheet.create({
     paddingLeft: 55,
 
   },
- 
+  containerClaro: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "#C0CCCD",
+    paddingLeft: 55,
+  },
   
   texto: {
     color:'white'
