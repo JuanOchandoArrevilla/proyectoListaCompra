@@ -9,6 +9,7 @@ export const InputProvider = ({children}) => {
     const [showModalRegistrar, setShowModalRegistrar] = useState(false);
     const [showModalIngresar, setShowModalIngresar] = useState(false);
 
+
     const registrarUsuario = (nombre,apellidos,correo,password) => {
 
         fetch(URL+'api/usuarios',{
@@ -41,6 +42,7 @@ export const InputProvider = ({children}) => {
             registrarUsuario,
             showModalIngresar, 
             setShowModalIngresar,
+            
         }} >
             {children}
         </ContexInput.Provider>

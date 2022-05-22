@@ -12,14 +12,15 @@ const [dataUsers,setDataUsers] = useState([]);
 const [dataLista,setDataLista] = useState([]);
 const [updateMisListas, setUpdateMisListas] = useState(false);
 const [cestaProductosVacia, setCestaProductosVacia] = useState(true);
+const [temaColor, setTemaColor] = useState(false);
 
 
 
 
-    const ingresarUsuario = async (correo,password) => {
+    const ingresarUsuario =  (correo,password) => {
         setLoginPending(true);
         
-       await fetch(URL+'api/login',{
+       fetch(URL+'api/login',{
             method: 'POST',
             body: JSON.stringify({
                 correo,
@@ -46,15 +47,15 @@ const [cestaProductosVacia, setCestaProductosVacia] = useState(true);
     };
 
    
-    const cerrarSesion = async() => {       
+    const cerrarSesion = () => {       
          setIslogueado(false);
-         setDataLista([]);
-         setCestaProductosVacia(true);
-         setErrorIngresar(false);
+        //  setDataLista([]);
+        //  setCestaProductosVacia(true);
+        //  setErrorIngresar(false);
     }
 
-    const crearNombreLista = async(nombreLista,usuarioId) => {
-        await fetch(URL+'api/listasNombre',{
+    const crearNombreLista = (nombreLista,usuarioId) => {
+       fetch(URL+'api/listasNombre',{
             method: 'POST',
             body: JSON.stringify({
                 nombreLista,
@@ -74,9 +75,9 @@ const [cestaProductosVacia, setCestaProductosVacia] = useState(true);
     }
 
  
-    const addProductLista = async(listaProductoId,productoId) => {
+    const addProductLista = (listaProductoId,productoId) => {
 
-        await fetch(URL+'api/addProductos',{
+        fetch(URL+'api/addProductos',{
             method: 'POST',
             body: JSON.stringify({
                 listaProductoId,
@@ -96,9 +97,9 @@ const [cestaProductosVacia, setCestaProductosVacia] = useState(true);
 
     };
 
-    const eliminarProLista = async(id) => {
+    const eliminarProLista = (id) => {
 
-          await fetch(URL+'api/addProductos/'+id, 
+           fetch(URL+'api/addProductos/'+id, 
             { method: 'DELETE',
             headers: {
                 Accept: 'application/json',
@@ -138,6 +139,8 @@ const [cestaProductosVacia, setCestaProductosVacia] = useState(true);
             cestaProductosVacia, 
             setCestaProductosVacia,
             setErrorIngresar,
+            temaColor, 
+            setTemaColor,
            
            
            

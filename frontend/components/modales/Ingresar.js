@@ -12,7 +12,6 @@ const Ingresar = () => {
   const [password, setPassword] = useState("");
   const { ingresarUsuario, loginPending, errorIngresar,setErrorIngresar } = useContext(AuthContext);
   const { showModalIngresar, setShowModalIngresar } = useContext(ContexInput);
-  const ss = true;
   return (
     <Modal visible={showModalIngresar}>
       {loginPending ? <AppLoader /> : null}

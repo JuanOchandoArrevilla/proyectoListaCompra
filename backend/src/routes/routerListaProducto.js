@@ -69,6 +69,9 @@ router.post("/addProductos", (req, res) => {
       productoId: req.body.productoId,
     })
     .then((result) => {
+      if (req.body.listaProductoId && req.body.productoId ) {
+
+      }   
       res.json(result);
     }).catch((err) => {
       console.log(err);

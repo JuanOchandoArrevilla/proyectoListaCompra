@@ -6,7 +6,7 @@ const NameList = ({ route, navigation }) => {
 
   const { idUsuario } = route.params;
   const [nombreLista, setNombreLista] = useState("");
-  const { crearNombreLista } = useContext(AuthContext);
+  const { crearNombreLista, temaColor,dataUsers } = useContext(AuthContext);
 
 
   const validarNombreLista = (nombreLista,idUsuario) => {
@@ -18,12 +18,18 @@ const NameList = ({ route, navigation }) => {
   }])
     } else {
       crearNombreLista(nombreLista, idUsuario);
+      setNombreLista("");
+       
+        navigation.navigate("Lists", {
+          idUsuario: dataUsers.id,
+        })
 
     }
+
   }
 
   return (
-    <View style={styles.container}>
+    <View style={temaColor ? styles.containerClaro :styles.container}>
       <View style={styles.input}>
         <Input placeholder="Nombre de Lista" onChangeText={setNombreLista} value={nombreLista} />
         <TouchableOpacity onPress={() => validarNombreLista(nombreLista,idUsuario) }
@@ -42,6 +48,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#202620",
+  },
+  containerClaro: {
+    flexDirection: "column",
+    flex: 1,
+    backgroundColor: "#C0CCCD",
   },
   input: {
     width: 300,
