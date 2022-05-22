@@ -126,7 +126,7 @@ const MainMenu = ({ navigation }) => {
               <Text style={styles.textTema}>Modo Oscuro</Text>
                 <RadioButton
                   value="oscuro"
-                  status={temaColor === false ? "checked" : "unchecked"}
+                  status={temaColor === false ? "checked" : "unchecked" }
                   onPress={() => validarTema()}
                 />
                </View >
@@ -142,8 +142,7 @@ const MainMenu = ({ navigation }) => {
                 />
 
                 </View>
-
-                
+    
             </View>
           </View>
         </Modal>
@@ -192,7 +191,7 @@ const MainMenu = ({ navigation }) => {
                 key={index}
                   onPress={() => eliminarProLista(e.listas_con_productos.id)}
                 >
-                  <Card>
+                  <Card style={temaColor ? {backgroundColor: "#95A5A6" } : null }>
                     <Text
                      
                       style={styles.textProducto}
@@ -356,13 +355,13 @@ const styles = StyleSheet.create({
   icon: {
     color: "#fff",
     fontSize: 20,
-    left: 110,
+    left: 100,
     bottom: 20,
   },
   iconClaro: {
     color: "#000",
     fontSize: 20,
-    left: 110,
+    left: 100,
     bottom: 20,
   },
 
