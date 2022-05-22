@@ -205,7 +205,6 @@ const MainMenu = ({ navigation }) => {
                     />
                   </Card>
                 </TouchableOpacity>
-
               );
             })}
           </View>
@@ -234,7 +233,6 @@ const MainMenu = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-
     top: 50,
     flexDirection: "column",
     flex: 1,
@@ -310,8 +308,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   logoCompra: {
-    width: 80,
-    height: 80,
     top: 10,
     width: 75,
     height: 75,
@@ -324,16 +320,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: 40,
     width: 240,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  productsView: {
-    backgroundColor: '#DDD',
-    width: 100,
-    height: 100,
-    alignItems: 'center',
-    margin: 5,
-    borderRadius: 10,
     left: 80,
   },
   textCategorias: {
@@ -348,7 +334,6 @@ const styles = StyleSheet.create({
     padding: 3,
     fontWeight: "bold",
   },
-  
   contenedorCategoria: {
     top: 70,
     marginBottom: 250,
