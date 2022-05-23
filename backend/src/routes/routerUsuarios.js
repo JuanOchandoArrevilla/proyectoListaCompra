@@ -76,6 +76,15 @@ router.post("/posts", verifyToken, (req , res) => {
   });
 });
 
+router.get("/usuarios", (req, res) => {
+  usuarios.findAll({})
+  .then((result) => {
+    res.json(result);
+  }).catch((err) => {
+    console.log(err);
+  });
+});
+
 
 
 function verifyToken(req, res, next){
@@ -89,5 +98,9 @@ function verifyToken(req, res, next){
       res.sendStatus(403);
   }
 }
+
+
+
+
 
 module.exports = router;

@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Modal, TouchableOpacity,Alert } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import Input from "../Input";
 import { ContexInput } from "../../context/ContexInput";
 import { AuthContext } from "../../context/AuthContext";
-
+import { URL } from "../../URL/URL";
 import AppLoader from "../AppLoader";
 
 const Registar = () => {
@@ -23,7 +23,21 @@ const Registar = () => {
   const { registrarUsuario, showModalRegistrar, setShowModalRegistrar } =
     useContext(ContexInput);
   const { loginPending, setLoginPending } = useContext(AuthContext);
+  const [listaUsuarios, setListaUsuarios] = useState([]);
 
+ 
+  
+  const comprobarCorreoRepetido = (email) => {
+    let correoExclusivo = true; 
+
+      listaUsuarios.forEach((e) => {
+        if (e.correo === email) {
+         correoExclusivo = false;
+        }        
+      })
+      return correoExclusivo;
+
+  }
 
   useEffect(() => {
     let validaNombre = /^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/;
@@ -58,6 +72,16 @@ const Registar = () => {
       setValidarPassword(false);
     }
 
+    fetch(URL+"api/usuarios").then((res) => {
+      return res.json();
+    })
+    .then((daataa) => {
+      setListaUsuarios(daataa);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   }, [nombre, correo, apellidos, password]);
 
   const datos = () => {
@@ -68,15 +92,32 @@ const Registar = () => {
       !validarApellidos &&
       !validarCorreo &&
       !validarPassword
-    ) {
-      registrarUsuario(nombre, apellidos, correo, password);
-      setShowModalRegistrar(false);
-      setNombre("");
-      setApellidos("");
-      setCorreo("");
-      setPassword("");
-      setLoginPending(false);
-      
+    )
+    
+    {
+      if (comprobarCorreoRepetido(correo)) {
+        registrarUsuario(nombre, apellidos, correo, password);
+        setShowModalRegistrar(false);
+        setNombre("");
+        setApellidos("");
+        setCorreo("");
+        setPassword("");
+        setLoginPending(false);
+        
+      } else {
+
+        Alert.alert("error", "correo ya existe", [
+          {
+            text: "ok",
+            style: "destructive",
+          },
+       
+        ]);
+        setLoginPending(false);
+        setCorreo("");
+     
+      }
+     
 
     } else {
 
@@ -129,9 +170,7 @@ const Registar = () => {
         </TouchableOpacity>
 
         {ingresar && 
-        
-        
-          <Text style={styles.textoError}>error al ingresar datos</Text>}
+           <Text style={styles.textoError}>error al ingresar datos</Text>}
 
         
         <TouchableOpacity
